@@ -22,3 +22,10 @@ async def get_all_books():
 @app.post("/books")
 async def post_book_parameter(limit: int = 1, offset: int = 0):
     return book_db[offset:][:limit]
+
+
+@app.post("/change_name")
+async def change_name(user_id: int, new_name: str):
+    current_user = list(filter(lambda user: user["id"] == user_id, users_db))[0]
+    current_user["name"] = new_name
+    return {"status_code": 200, "user": current_user}
